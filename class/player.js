@@ -6,6 +6,6 @@ class Player
         this.y = y
         this.width = 50
         this.height = 30
-        this.color = "#800080"
+        this.color = "#690fad"
     }
 }

@@ -6,5 +6,8 @@ class Enemie
         this.y = y
         this.width = 50
         this.height = 30
+        this.color = "#FF0000"
     }
+
+
 }
