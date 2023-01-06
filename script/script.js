@@ -3,7 +3,7 @@ var height
 var center
 var player
 var enemieController
-var debug = true
+var debug = false
 
 function setup()
 {
@@ -31,7 +31,6 @@ function draw()
     rect(player.x, player.y, player.width, player.height)
     pop()
 
-
     enemieController.enemies.forEach(element =>
     {
         fill(element.color)
@@ -42,6 +41,8 @@ function draw()
 
 function playerToMouseDirection()
 {
+    //TODO: if mouse colliding on rect3 or rect2 the returned angle should be negative [NOT DONE]
+
     stroke(255)
     strokeWeight(2)
     //rectangle
@@ -72,7 +73,7 @@ function playerToMouseDirection()
         //angle
         textSize(32)
         let degree_angle = angle * (180 / Math.PI)
-        text(degree_angle, center.width, height - 20);
+        text(degree_angle, center.width, height - 20)
         //console.log("Distances:\nadjacent->" + adjacent + ", opposite->" + opposite + ", hypotenuse->" + hypotenuse)
         fill(255)
         rect(rect2.x, rect2.y, rect2.width, rect2.height)
