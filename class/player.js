@@ -8,4 +8,10 @@ class Player
         this.height = 30
         this.color = "#690fad"
     }
+
+    setPosition(x, y)
+    {
+        this.x = x
+        this.y = y
+    }
 }
