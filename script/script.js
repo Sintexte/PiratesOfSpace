@@ -9,6 +9,7 @@ var debug = false
 //design purpous only
 var bg_starsStablizer = 1
 var stars_color = "#536F8D"
+var timerBackground = new Date().getTime()
 
 function setup()
 {
@@ -19,7 +20,6 @@ function setup()
     player = new Player((center.width), center.height)
     enemieController = new EnemieController(3)
     createCanvas(width, height)
-    console.log(stars);
 }
 
 function draw()
@@ -27,13 +27,20 @@ function draw()
     background(0)
     space_background()
     drawPlayer()
+    drawEnemies()
+    projectile()
+}
 
+function projectile(){
+}
+
+function drawEnemies(){
     enemieController.enemies.forEach(element =>
-    {
-        fill(element.color)
-        noStroke()
-        rect(element.x, element.y, element.width, element.height)
-    })
+        {
+            fill(element.color)
+            noStroke()
+            rect(element.x, element.y, element.width, element.height)
+        })
 }
 
 //draw player and rotate the player depeding on the mouse
@@ -70,7 +77,7 @@ function playerToMouseDirection()
     let adjacent = (bx2 - bx1) - (by2 - by1)
     let hypotenuse = ~~Math.sqrt(adjacent * adjacent + opposite * opposite) //cannot get distance from graphic unreliable
     let angle = Math.asin(opposite / hypotenuse)
-    if (mouseX > center.width && mouseY > 0)
+    if (mouseX > center.width && mouseY > 0) //HotFix for a case where player angle dont follow properly the mouse
     {
         angle *= -1
     }
@@ -92,7 +99,6 @@ function playerToMouseDirection()
         textSize(32)
         let degree_angle = angle * (180 / Math.PI)
         text(angle, center.width, height - 20)
-        //console.log("Distances:\nadjacent->" + adjacent + ", opposite->" + opposite + ", hypotenuse->" + hypotenuse)
     }
 
     //radiant angle
@@ -119,21 +125,22 @@ function generate_stars(n_stars)
 
 function space_background()
 {
-    stars.forEach(element =>
-    {
+    stars.forEach(element => {
         push()
         fill(stars_color)
         ellipse(element.x, element.y, element.size, element.radius)
         pop()
-        element.x += ((Math.random() * 0.3) + 1) * bg_starsStablizer
-        element.y += ((Math.random() * 0.3) + 1) * bg_starsStablizer
+        element.x += ((Math.random() * 0.12) + 0.09) * bg_starsStablizer
+        element.y += ((Math.random() * 0.11) + 0.05) * bg_starsStablizer*1.1
     });
 
-    if (bg_starsStablizer == 1)
-    {
+    let time = new Date().getTime() - timerBackground 
+    if(time >= 1000 && time < 1020){
+        bg_starsStablizer *= -0.8
+    }else if(time >= 2000 && time < 2020){
+        bg_starsStablizer *= 1.2
+    }else if(time > 3000){
         bg_starsStablizer *= -1
-    } else
-    {
-        bg_starsStablizer *= -1
+        timerBackground = new Date().getTime() 
     }
 }
