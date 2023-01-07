@@ -3,50 +3,73 @@ var height
 var center
 var player
 var enemieController
-var stars = []
 var debug = false
 
 //design purpous only
 var bg_starsStablizer = 1
+var stars = []
 var stars_color = "#536F8D"
 var timerBackground = new Date().getTime()
+
+//event variables
+var isclicked
+var isMousehold
+
+//testing (variables used to test new implementations)
+var projectile1
 
 function setup()
 {
     width = window.innerWidth
     height = window.innerHeight
     stars = generate_stars(300)
-    center = { width: width / 2, height: height / 2 }
+    center = { width: width / 2, height: height / 2, x: width / 2, y: height / 2 } //width/height and x/y can be used in same cases (xy makes more sense on some situations)
     player = new Player((center.width), center.height)
     enemieController = new EnemieController(3)
     createCanvas(width, height)
+
 }
 
 function draw()
 {
+    //Draw
     background(0)
     space_background()
+    drawProjectiles()
     drawPlayer()
     drawEnemies()
-    projectile()
+
+    //Projectile Cleaner
+    player.pController._cleanUpProjectiles(0, 0, width, height)
+
+    //Position update
+    player.pController._update()
+
+    //Events
+    if (mouseIsPressed)
+    {
+        player.pController.shoot(center.x, center.y, mouseX, mouseY)
+    }
 }
 
-function projectile(){
-}
+/*Draw Functions*/
+function drawEnemies()
+{
+    //draw all enemies
 
-function drawEnemies(){
     enemieController.enemies.forEach(element =>
-        {
-            fill(element.color)
-            noStroke()
-            rect(element.x, element.y, element.width, element.height)
-        })
+    {
+        fill(element.color)
+        noStroke()
+        rect(element.x, element.y, element.width, element.height)
+    })
 }
 
-//draw player and rotate the player depeding on the mouse
 function drawPlayer()
 {
+    //draw player and rotate the player depeding on the mouse
     //player
+
     push()
     let angle = playerToMouseDirection()
     rectMode(CENTER)
@@ -59,10 +82,33 @@ function drawPlayer()
     pop()
 }
 
-//functions with purpous
-//returns a radiant angle depending on the mouse position
+function drawProjectiles()
+{
+    //draw projectiles
+    this.player.pController.getProjectiles().forEach(projectile =>
+    {
+        let radius = projectile.radius
+        push()
+        fill(projectile.color)
+        ellipse(projectile.x, projectile.y, radius, radius)
+        pop()
+    });
+
+}
+
+
+/*Input events*/
+function mouseClicked()
+{
+    //for future use
+}
+
+
+/*Game Logic functions*/
 function playerToMouseDirection()
 {
+    //returns a radiant angle depending on the mouse position
+
     //TODO: if mouse colliding on rect3 or rect2 the returned angle should be negative [NOT DONE]
     stroke(255)
     strokeWeight(2)
@@ -86,7 +132,7 @@ function playerToMouseDirection()
         angle = 1.5
     }
 
-    //for debuging purpouses
+    //for debuging purposes
     if (debug)
     {
         //opposite
@@ -105,7 +151,7 @@ function playerToMouseDirection()
     return angle
 }
 
-//functions for design only
+/* "Aesthetic" Functions */
 function generate_stars(n_stars)
 {
     let _stars = []
@@ -125,22 +171,26 @@ function generate_stars(n_stars)
 
 function space_background()
 {
-    stars.forEach(element => {
+    stars.forEach(element =>
+    {
         push()
         fill(stars_color)
         ellipse(element.x, element.y, element.size, element.radius)
         pop()
         element.x += ((Math.random() * 0.12) + 0.09) * bg_starsStablizer
-        element.y += ((Math.random() * 0.11) + 0.05) * bg_starsStablizer*1.1
+        element.y += ((Math.random() * 0.11) + 0.05) * bg_starsStablizer * 1.1
     });
 
-    let time = new Date().getTime() - timerBackground 
-    if(time >= 1000 && time < 1020){
+    let time = new Date().getTime() - timerBackground
+    if (time >= 1000 && time < 1020)
+    {
         bg_starsStablizer *= -0.8
-    }else if(time >= 2000 && time < 2020){
+    } else if (time >= 2000 && time < 2020)
+    {
         bg_starsStablizer *= 1.2
-    }else if(time > 3000){
+    } else if (time > 3000)
+    {
         bg_starsStablizer *= -1
-        timerBackground = new Date().getTime() 
+        timerBackground = new Date().getTime()
     }
 }
