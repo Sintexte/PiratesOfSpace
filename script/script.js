@@ -3,12 +3,17 @@ var height
 var center
 var player
 var enemieController
+var playerProjectileController
 var stars = []
-var debug = false
+var gamestarted = false
+var debug = true
 
 //design purpous only
 var bg_starsStablizer = 1
 var stars_color = "#536F8D"
+
+//testing
+var rigidbody1
 
 function setup()
 {
@@ -19,15 +24,31 @@ function setup()
     player = new Player((center.width), center.height)
     enemieController = new EnemieController(3)
     createCanvas(width, height)
-    console.log(stars);
+    gamestarted = true
+
+    rigidbody1 = new RigideBody2d(center.width, center.height, 30, false)
 }
 
+//draw function
 function draw()
 {
     background(0)
-    space_background()
-    drawPlayer()
+    drawSpaceBackground()
 
+    //draw projectiles
+    push()
+    fill("#fff")
+    ellipse(rigidbody1.position.x, rigidbody1.position.y, 20, 20)
+    pop()
+
+    drawPlayer()
+    drawEnemies()
+
+    rigidbody1.apply()
+}
+
+function drawEnemies()
+{
     enemieController.enemies.forEach(element =>
     {
         fill(element.color)
@@ -117,7 +138,7 @@ function generate_stars(n_stars)
     return _stars
 }
 
-function space_background()
+function drawSpaceBackground()
 {
     stars.forEach(element =>
     {
@@ -135,5 +156,19 @@ function space_background()
     } else
     {
         bg_starsStablizer *= -1
+    }
+}
+
+function mouseClicked()
+{
+    if (gamestarted)
+    {
+        let mX, mY
+        if (mouseX < center.width && mouseY < center.height)
+        {
+            mX = ((mouseX) / 50) * -1
+            mY = ((mouseY) / 50) * -1
+        }
+        rigidbody1.addForce((mouseX / 100) * 0.5 * -1, (mouseY / 100) * 0.5 * -1)
     }
 }
