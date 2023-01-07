@@ -13,7 +13,7 @@ class Projectile
         this.vx = 0
         this.vy = 0
 
-        this.speedMultipler = 20
+        this.speedMultipler = 1
 
         this.shooted = false
 

@@ -12,10 +12,9 @@ class ProjectileController
         //for global color of all the projectiles
         this.color = "#0000ff"
 
-
         //Interval to clean up the projectile (ms)
         this.timer = new Date().getTime()
-        this.cleanupInterval = 500
+        this.cleanupInterval = 100
 
         //debug
         this._iscleaningupPorjectile = false
