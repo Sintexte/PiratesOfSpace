@@ -15,4 +15,10 @@ class EnemieController
         }
     }
 
+    _update(){
+        this.enemies.map((enemie)=>{
+            enemie._update()
+        })
+    }
+
 }

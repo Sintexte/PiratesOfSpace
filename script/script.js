@@ -25,15 +25,20 @@ function setup()
     stars = generate_stars(300)
     center = { width: width / 2, height: height / 2, x: width / 2, y: height / 2 } //width/height and x/y can be used in same cases (xy makes more sense on some situations)
     player = new Player((center.width), center.height)
-    enemieController = new EnemieController(3)
-    createCanvas(width, height)
+    enemieController = new EnemieController(1)
 
+    
+    createCanvas(width, height)
 }
 
 function draw()
 {
-    //Draw
     background(0)
+
+    //Behavior
+    behaviorEnemies()
+
+    //Draw
     space_background()
     drawProjectiles()
     drawPlayer()
@@ -50,6 +55,14 @@ function draw()
     {
         player.pController.shoot(center.x, center.y, mouseX, mouseY)
     }
+}
+
+/* Behaviors */
+function behaviorEnemies(){
+    enemieController._update()
+
+    let enemie = enemieController.enemies[0]
+    enemie.move(center.x, center.y)
 }
 
 /*Draw Functions*/
@@ -73,7 +86,7 @@ function drawPlayer()
     push()
     let angle = playerToMouseDirection()
     rectMode(CENTER)
-    translate(center.width, center.height);
+    translate(center.width, center.height)
     player.setPosition(0, 0)
     rotate(angle);
     fill(player.color)
