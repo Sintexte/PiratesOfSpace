@@ -4,7 +4,7 @@ class EnemieCollision extends SquareCollision
     {
         super(x, y, width, height)
         this.timerstart = (new Date()).getTime()
-        this.timerdelta = 1000 //ms //time to start 
+        this.timerdelta = 200 //ms //time to start 
 
     }
 
