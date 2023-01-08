@@ -17,7 +17,7 @@ class EnemieController
 
         //timer Clean up enemies
         this.timerstart = (new Date()).getTime()
-        this.cleanupInterval = 100
+        this.cleanupInterval = 200
 
         this._iscleaningupEnemies = false
     }

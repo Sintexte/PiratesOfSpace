@@ -19,7 +19,6 @@ var isMousehold
 
 //testing (variables used to test new implementations)
 var projectile1
-var sCollision
 var enemiemove = true
 
 function setup()
@@ -29,10 +28,7 @@ function setup()
     stars = generate_stars(300)
     center = { width: width / 2, height: height / 2, x: width / 2, y: height / 2 } //width/height and x/y can be used in same cases (xy makes more sense on some situations)
     player = new Player((center.width), center.height)
-    enemieController = new EnemieController(20, 1000, 1200)
-
-    //testingCollision
-    sCollision = new SquareCollision(20, 20, 30, 30)
+    enemieController = new EnemieController(300, 300, 30)
 
 
     createCanvas(width, height)
@@ -61,51 +57,24 @@ function draw()
     player.pController._update()
 
     //Collision
-    /*
-    enemie2 = new Enemie(50, 90)
-    enemie2.color = "#0000ff"
-    enemie2.setCollision(enemie2.isColliding(mouseX, mouseY, 20))
-    enemie2._update()
-
-    push()
-    fill(enemie2.color)
-    rect(enemie2.x, enemie2.y, enemie2.width, enemie2.height)
-
-
-    fill("#ffffff")
-    ellipse(mouseX, mouseY, 20, 20)
-    pop()
-    */
+    //in behavior
 
     //Events
     if (mouseIsPressed)
     {
-        /*Debug
-        let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
-        let ellipse3 = { x: mouseX+50, y: mouseY+50, radius: 20 }
-        let ellipse4 = { x: mouseX-50, y: mouseY-50, radius: 20 }
-        
-        player.pController.shoot(center.x, center.y, mouseX, mouseY)
-
-        enemieController.setCollidingEllipseObjects([ellipse2, ellipse3])
-        push()
-        ellipse(ellipse2.x, ellipse2.y, ellipse2.radius, ellipse2.radius)
-        ellipse(ellipse3.x, ellipse3.y, ellipse3.radius, ellipse3.radius)
-        ellipse(ellipse4.x, ellipse4.y, ellipse4.radius, ellipse4.radius)
-        pop()*/
         /* Debug2 */
         player.pController.shoot(center.x, center.y, mouseX, mouseY)
-        
-    }else{
-        let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
-        let ellipse3 = { x: mouseX+50, y: mouseY+50, radius: 20 }
-        enemieController.setCollidingEllipseObjects([])  
+
+    } else
+    {
+        enemieController.setCollidingEllipseObjects([])
     }
 
     enemieCollisionCheck()
 }
 /* Collision */
-function enemieCollisionCheck(){
+function enemieCollisionCheck()
+{
     enemieController.setCollidingEllipseObjects(player.pController.getProjectiles())
 }
 
@@ -115,7 +84,7 @@ function behaviorEnemies()
     enemieController._update()
     enemieController.enemies.forEach((enemie) =>
     {
-        if (enemiemove && !(enemie.isDead())){enemie.moveLook(center.x, center.y)}
+        if (enemiemove && !(enemie.isDead())) { enemie.moveLook(center.x, center.y) }
     })
 }
 
