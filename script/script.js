@@ -25,9 +25,9 @@ function setup()
     stars = generate_stars(300)
     center = { width: width / 2, height: height / 2, x: width / 2, y: height / 2 } //width/height and x/y can be used in same cases (xy makes more sense on some situations)
     player = new Player((center.width), center.height)
-    enemieController = new EnemieController(1)
+    enemieController = new EnemieController(20, 0, 0)
 
-    
+
     createCanvas(width, height)
 }
 
@@ -58,26 +58,18 @@ function draw()
 }
 
 /* Behaviors */
-function behaviorEnemies(){
+function behaviorEnemies()
+{
     enemieController._update()
 
-    let enemie = enemieController.enemies[0]
-    enemie.move(center.x, center.y)
-}
 
-/*Draw Functions*/
-function drawEnemies()
-{
-    //draw all enemies
-
-    enemieController.enemies.forEach(element =>
+    enemieController.enemies.forEach((enemie) =>
     {
-        fill(element.color)
-        noStroke()
-        rect(element.x, element.y, element.width, element.height)
+        enemie.move(center.x, center.y)
     })
 }
 
+/*Draw Functions*/
 function drawPlayer()
 {
     //draw player and rotate the player depeding on the mouse
@@ -88,7 +80,7 @@ function drawPlayer()
     rectMode(CENTER)
     translate(center.width, center.height)
     player.setPosition(0, 0)
-    rotate(angle);
+    rotate(angle)
     fill(player.color)
     noStroke()
     rect(player.x, player.y, player.width, player.height)
@@ -109,6 +101,24 @@ function drawProjectiles()
 
 }
 
+function drawEnemies()
+{
+    //draw all enemies
+    enemieController.enemies.forEach(enemie =>
+    {
+        push()
+        let angle = enemieToDirection(enemie.x2, enemie.y2, center.x, center.y)
+        rectMode(CENTER)
+        translate(enemie.x2, enemie.y2)
+        enemie.setPosition(0, 0)
+        rotate(angle)
+        fill(enemie.color)
+        noStroke()
+        rect(enemie.x, enemie.y, enemie.width, enemie.height)
+        pop()
+    })
+}
+
 
 /*Input events*/
 function mouseClicked()
@@ -118,6 +128,25 @@ function mouseClicked()
 
 
 /*Game Logic functions*/
+function enemieToDirection(posX, posY, mX, mY)
+{
+    //returns a radiant angle depending on the mouse position
+
+    //TODO: if mouse colliding on rect3 or rect2 the returned angle should be negative [NOT DONE]
+    stroke(255)
+    strokeWeight(2)
+
+    //differance between two points
+    let dx = mX - posX
+    let dy = mY - posY
+
+    //calculating the angle
+    let angle = Math.atan2(dy, dx)
+
+    //radiant angle
+    return angle
+}
+
 function playerToMouseDirection()
 {
     //returns a radiant angle depending on the mouse position
