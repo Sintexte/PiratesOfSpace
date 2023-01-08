@@ -1,3 +1,5 @@
+//TODO: cleanup and leave only setup and draw functions
+
 var width
 var height
 var center
@@ -17,6 +19,8 @@ var isMousehold
 
 //testing (variables used to test new implementations)
 var projectile1
+var sCollision
+var enemiemove = false
 
 function setup()
 {
@@ -25,7 +29,10 @@ function setup()
     stars = generate_stars(300)
     center = { width: width / 2, height: height / 2, x: width / 2, y: height / 2 } //width/height and x/y can be used in same cases (xy makes more sense on some situations)
     player = new Player((center.width), center.height)
-    enemieController = new EnemieController(20, 0, 0)
+    enemieController = new EnemieController(100, 100, 200)
+
+    //testingCollision
+    sCollision = new SquareCollision(20, 20, 30, 30)
 
 
     createCanvas(width, height)
@@ -50,10 +57,48 @@ function draw()
     //Position update
     player.pController._update()
 
+    //Collision
+    //enemie Collision
+    let e1 = enemieController.enemies[0]
+    let eCollision = new EnemieCollision(e1.x, e1.y, e1.width, e1.height)
+
+    //rect(e1.x, e1.y, e1.width, e1.height)
+    //collision
+    push()
+    fill("#00ff00")
+    rect(eCollision.x, eCollision.y, eCollision.w, eCollision.h)
+    pop()
+
+    //testing basic Collision
+    
+    let r1 = { x: 200, y: 50, w: 10, h: 10 }
+    let e2 = { x: mouseX, y: mouseY, r: 40 }
+    sCollision.x = r1.x; sCollision.y = r1.y; sCollision.width = r1.w; sCollision.height = r1.h
+
+    let isColliding = sCollision.toEllipseCollision({ x: e2.x, y: e2.y, radius: e2.r })
+
+    //debug Collision
+    if (isColliding == true)
+    {
+        push()
+        fill("#00ff00")
+        noStroke()
+    }
+    rect(r1.x, r1.y, r1.w, r1.h)
+    ellipse(e2.x, e2.y, e2.r * 2, e2.r * 2)
+    if (isColliding) pop()
+
+    //let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
+
     //Events
     if (mouseIsPressed)
     {
         player.pController.shoot(center.x, center.y, mouseX, mouseY)
+
+        //enemieController.setCollidingEllipseObjects([ellipse2])
+        push()
+        //ellipse(ellipse2.x, ellipse2.y, ellipse2.radius, ellipse2.radius)
+        pop()
     }
 }
 
@@ -65,7 +110,7 @@ function behaviorEnemies()
 
     enemieController.enemies.forEach((enemie) =>
     {
-        enemie.move(center.x, center.y)
+        if (enemiemove) enemie.moveLook(center.x, center.y)
     })
 }
 
@@ -106,10 +151,9 @@ function drawEnemies()
     enemieController.enemies.forEach(enemie =>
     {
         push()
-        let angle = enemieToDirection(enemie.x, enemie.y, center.x, center.y)
         rectMode(CENTER)
         translate(enemie.x, enemie.y)
-        rotate(angle)
+        rotate(enemie.angle)
         fill(enemie.color)
         noStroke()
         rect(0, 0, enemie.width, enemie.height)
@@ -126,24 +170,7 @@ function mouseClicked()
 
 
 /*Game Logic functions*/
-function enemieToDirection(posX, posY, mX, mY)
-{
-    //returns a radiant angle depending on the mouse position
 
-    //TODO: if mouse colliding on rect3 or rect2 the returned angle should be negative [NOT DONE]
-    stroke(255)
-    strokeWeight(2)
-
-    //differance between two points
-    let dx = mX - posX
-    let dy = mY - posY
-
-    //calculating the angle
-    let angle = Math.atan2(dy, dx)
-
-    //radiant angle
-    return angle
-}
 
 function playerToMouseDirection()
 {
