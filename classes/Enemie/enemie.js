@@ -23,7 +23,7 @@ class Enemie
         this.vy = 0
 
         //collision
-        this.collision = new SquareCollision(x, y, this.width / 1.5, this.height / 1.5)
+        this.collision = new EnemieCollision(x, y, this.width / 1.5, this.height / 1.5)
         this.iscollision = false
 
         //"Aestetic"
@@ -110,7 +110,7 @@ class Enemie
         if (this.iscollision)
         {
             //Enemie Behavior/StateChange when colliding
-            console.log("Collision");
+            //console.log("Collision");
             this.color = "#00ff00"
         } else
         {

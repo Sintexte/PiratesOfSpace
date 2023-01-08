@@ -19,6 +19,7 @@ class EnemieController
     //assuming an object that have x, y, radius as states
     setCollidingEllipseObjects(array)
     {
+        this.pCollidingObjects = []
         array.forEach((ellipse) =>
         {
             this.pCollidingObjects.push(ellipse)
@@ -46,17 +47,7 @@ class EnemieController
     //calculation for the collision of the enemie on all "projectiles" or ellipseShaped bodies
     collision_update(enemie)
     {
-        //update the collision 
-        this.pCollidingObjects.forEach((projectile) =>
-        {
-            //hard to debug code might change
-            //only the enemie know he has been colliding
-            //the other party will not, i will need to change the code and debug
-            //to make it that both party knows in this case projectiles
-
-            let iscolliding = enemie.isColliding(projectile.x, projectile.y, projectile.radius)
-            enemie.setCollision(iscolliding)
-        })
+        enemie.collision.checkCollisionArray(enemie, this.pCollidingObjects)
     }
 
     _update()
