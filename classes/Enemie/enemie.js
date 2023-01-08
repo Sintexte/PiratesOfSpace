@@ -31,9 +31,9 @@ class Enemie
         this.iscollision = false
 
         //"Aestetic"
-        this.basecolor = "#FF0000"
-        this.deadcolor = "#000000"
-        this.hitcolor = "#00FF00"
+        this.basecolor = "#FFFF00"
+        this.deadcolor = "#FF0000"
+        this.hitcolor = "#DC343B"
         this.color = this.basecolor
     }
 
@@ -151,15 +151,11 @@ class Enemie
             //TODO {modify the code so it can know between hurtful collision and friendly collision,
             //      , for that you would need to change some code in script.js there where the projectile are given as collision bodies}
 
-            this.hurt(100)
+            this.hurt(10)
             this.color = this.hitcolor
         } else
         {
-            //out of collision Return to normal state
-            if (this.color != "#ff0000")
-            {
-                this.color = "#ff0000"
-            }
+            this.color = this.basecolor
         }
     }
 

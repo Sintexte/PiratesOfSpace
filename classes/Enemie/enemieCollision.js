@@ -19,11 +19,11 @@ class EnemieCollision extends SquareCollision
             //to make it that both party knows in this case projectiles
             let iscolliding = enemie.isColliding(projectile.x, projectile.y, projectile.radius)
 
-            if (iscolliding) { enemie.setCollision(true); console.log("Col") }
+            if (iscolliding) { enemie.setCollision(true); }
             else
             {
                 if (new Date().getTime() - this.timerstart > this.timerdelta)
-                { //added cause of a weird bug (when this on place collision works properly first seconds or atleast first enemies) and the yep there is two bugs in the collision
+                { //[1FIX/2BUGS] added cause of a weird bug (when this on place collision works properly firstSeconds or maybe firstEnemies) and yep there is two bugs in the collision
                     enemie.setCollision(false)
                 }
                 this.timerstart = new Date().getTime()
