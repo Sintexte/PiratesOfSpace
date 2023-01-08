@@ -15,7 +15,7 @@ class ProjectileController
 
         //Interval to clean up the projectile (ms)
         this.timer = new Date().getTime()
-        this.cleanupInterval = 500
+        this.cleanupInterval = 100
 
         //debug
         this._iscleaningupPorjectile = false
@@ -89,7 +89,7 @@ class ProjectileController
             this.projectiles.forEach((projectile, index) =>
             {
                 //check if the projectile is out of the screen
-                if ((projectile.x < startX || projectile.x > endX) && (projectile.y < startY || projectile.y > endY))
+                if ((projectile.x < startX || projectile.x > endX) || (projectile.y < startY || projectile.y > endY))
                 {
                     delete this.projectiles[index]
                     this.projectiles = this.projectiles.filter((value) => { return value != undefined })

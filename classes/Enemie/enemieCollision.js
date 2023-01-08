@@ -4,7 +4,7 @@ class EnemieCollision extends SquareCollision
     {
         super(x, y, width, height)
         this.timerstart = (new Date()).getTime() //time to start
-        this.timerdelta = 1 //ms  //period time before closing the collision smaller time snappier but slower game
+        this.timerdelta = 500 //ms  //period time before closing the collision smaller time snappier but slower game
 
     }
 
