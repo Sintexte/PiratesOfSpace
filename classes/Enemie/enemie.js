@@ -84,6 +84,7 @@ class Enemie
         return iscollision
     }
 
+
     //posx, posy position of the enemie
     //mx, my a given position
     enemieToDirection(mX, mY)
@@ -111,6 +112,13 @@ class Enemie
             //Enemie Behavior/StateChange when colliding
             console.log("Collision");
             this.color = "#00ff00"
+        } else
+        {
+            //out of collision Return to normal state
+            if (this.color != "#ff0000")
+            {
+                this.color = "#ff0000"
+            }
         }
     }
 

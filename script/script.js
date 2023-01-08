@@ -77,11 +77,12 @@ function draw()
     //Events
     if (mouseIsPressed)
     {
+        let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
         player.pController.shoot(center.x, center.y, mouseX, mouseY)
 
-        //enemieController.setCollidingEllipseObjects([ellipse2])
+        enemieController.setCollidingEllipseObjects([ellipse2])
         push()
-        //ellipse(ellipse2.x, ellipse2.y, ellipse2.radius, ellipse2.radius)
+        ellipse(ellipse2.x, ellipse2.y, ellipse2.radius, ellipse2.radius)
         pop()
     }
 }
