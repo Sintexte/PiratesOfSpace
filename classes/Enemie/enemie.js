@@ -22,13 +22,36 @@ class Enemie
         this.vx = 0
         this.vy = 0
 
+        //game aspects
+        this.health = 100
+        this.dead = false
+
         //collision
         this.collision = new EnemieCollision(x, y, this.width / 1.5, this.height / 1.5)
         this.iscollision = false
 
         //"Aestetic"
-        this.color = "#FF0000"
+        this.basecolor = "#FF0000"
+        this.deadcolor = "#000000"
+        this.hitcolor = "#00FF00"
+        this.color = this.basecolor
     }
+
+    //Game Aspect
+    die(){
+        this.dead = true
+        this.vx = 0
+        this.vy = 0
+    }
+
+    hurt(damage){
+        this.health -= damage
+        if(this.health < 0){ this.dead = true; this.die()}
+
+    }
+
+    //Getters
+    isDead(){return this.dead}
 
     //Setters
     setCollision(bool)
@@ -110,8 +133,15 @@ class Enemie
         if (this.iscollision)
         {
             //Enemie Behavior/StateChange when colliding
-            //console.log("Collision");
-            this.color = "#00ff00"
+            //will implement a enemie behavior
+            //when taking colliding take damage
+            //the problem is what if u collide with something that doesnt do damage
+            //this implementation assume every collision must be a projectile
+            //TODO {modify the code so it can know between hurtful collision and friendly collision,
+            //      , for that you would need to change some code in script.js there where the projectile are given as collision bodies}
+
+            this.hurt(100)
+            this.color = this.hitcolor
         } else
         {
             //out of collision Return to normal state
@@ -126,10 +156,16 @@ class Enemie
     _update()
     {
         //movement
-        this.x += this.vx * this.speed
-        this.y += this.vy * this.speed
+        if(!this.isDead()){
+            this.x += this.vx * this.speed
+            this.y += this.vy * this.speed
+    
+            //collision 
+            this.collision_update()
+        }else{
+            this.color = this.deadcolor
+        }
 
-        //collision 
-        this.collision_update()
+
     }
 }

@@ -29,7 +29,7 @@ function setup()
     stars = generate_stars(300)
     center = { width: width / 2, height: height / 2, x: width / 2, y: height / 2 } //width/height and x/y can be used in same cases (xy makes more sense on some situations)
     player = new Player((center.width), center.height)
-    enemieController = new EnemieController(100, 100, 200)
+    enemieController = new EnemieController(20, 1000, 1200)
 
     //testingCollision
     sCollision = new SquareCollision(20, 20, 30, 30)
@@ -53,6 +53,9 @@ function draw()
 
     //Projectile Cleaner
     player.pController._cleanUpProjectiles(0, 0, width, height)
+
+    //Enemies Cleaner
+    enemieController._cleanUpEnemies()
 
     //Position update
     player.pController._update()
@@ -112,7 +115,7 @@ function behaviorEnemies()
     enemieController._update()
     enemieController.enemies.forEach((enemie) =>
     {
-        if (enemiemove) enemie.moveLook(center.x, center.y)
+        if (enemiemove && !(enemie.isDead())){enemie.moveLook(center.x, center.y)}
     })
 }
 
