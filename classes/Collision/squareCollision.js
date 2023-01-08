@@ -9,6 +9,18 @@ class SquareCollision
         this.angle = 0
     }
 
+    //Setters
+    setPosition(x, y)
+    {
+        this.x = x
+        this.y = y
+    }
+
+    setSize(width, height)
+    {
+
+    }
+
     setAngle(angle)
     {
         this.angle = angle

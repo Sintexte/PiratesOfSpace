@@ -6,7 +6,7 @@ class Enemie
         this.x = x
         this.y = y
 
-        //target position
+        //target position; Not Used, Yet ?
         this.tX = 0
         this.tY = 0
 
@@ -18,7 +18,7 @@ class Enemie
         this.angle = 0
 
         //movement
-        this.speed = 1
+        this.speed = 5
         this.vx = 0
         this.vy = 0
 
@@ -38,20 +38,22 @@ class Enemie
     }
 
     //Game Aspect
-    die(){
+    die()
+    {
         this.dead = true
         this.vx = 0
         this.vy = 0
     }
 
-    hurt(damage){
+    hurt(damage)
+    {
         this.health -= damage
-        if(this.health < 0){ this.dead = true; this.die()}
+        if (this.health < 0) { this.dead = true; this.die() }
 
     }
 
     //Getters
-    isDead(){return this.dead}
+    isDead() { return this.dead }
 
     //Setters
     setCollision(bool)
@@ -127,6 +129,15 @@ class Enemie
         return angle
     }
 
+    movement_update()
+    {
+        this.x += this.vx * this.speed
+        this.y += this.vy * this.speed
+
+        //moving the square collision with the object
+        this.collision.setPosition(this.x, this.y)
+    }
+
     //collision update
     collision_update()
     {
@@ -156,13 +167,14 @@ class Enemie
     _update()
     {
         //movement
-        if(!this.isDead()){
-            this.x += this.vx * this.speed
-            this.y += this.vy * this.speed
-    
+        if (!this.isDead())
+        {
+            this.movement_update()
+
             //collision 
             this.collision_update()
-        }else{
+        } else
+        {
             this.color = this.deadcolor
         }
 
