@@ -1,7 +1,7 @@
 class EnemieCollision extends SquareCollision
 {
-    constructor(x, y, w, h)
+    constructor(x, y, width, height)
     {
-        super(x, y, w, h)
+        super(x, y, width, height)
     }
 }
