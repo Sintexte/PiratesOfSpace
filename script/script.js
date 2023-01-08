@@ -20,7 +20,7 @@ var isMousehold
 //testing (variables used to test new implementations)
 var projectile1
 var sCollision
-var enemiemove = false
+var enemiemove = true
 
 function setup()
 {
@@ -58,6 +58,7 @@ function draw()
     player.pController._update()
 
     //Collision
+    /*
     //enemie Collision
     let e1 = enemieController.enemies[0]
     let eCollision = new EnemieCollision(e1.x, e1.y, e1.width, e1.height)
@@ -70,7 +71,7 @@ function draw()
     pop()
 
     //testing basic Collision
-    
+
     let r1 = { x: 200, y: 50, w: 10, h: 10 }
     let e2 = { x: mouseX, y: mouseY, r: 40 }
     sCollision.x = r1.x; sCollision.y = r1.y; sCollision.width = r1.w; sCollision.height = r1.h
@@ -89,6 +90,7 @@ function draw()
     if (isColliding) pop()
 
     //let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
+    */
 
     //Events
     if (mouseIsPressed)
