@@ -70,7 +70,7 @@ function draw()
     pop()
 
     //testing basic Collision
-    
+
     let r1 = { x: 200, y: 50, w: 10, h: 10 }
     let e2 = { x: mouseX, y: mouseY, r: 40 }
     sCollision.x = r1.x; sCollision.y = r1.y; sCollision.width = r1.w; sCollision.height = r1.h
