@@ -59,57 +59,57 @@ function draw()
 
     //Collision
     /*
-    //enemie Collision
-    let e1 = enemieController.enemies[0]
-    let eCollision = new EnemieCollision(e1.x, e1.y, e1.width, e1.height)
+    enemie2 = new Enemie(50, 90)
+    enemie2.color = "#0000ff"
+    enemie2.setCollision(enemie2.isColliding(mouseX, mouseY, 20))
+    enemie2._update()
 
-    //rect(e1.x, e1.y, e1.width, e1.height)
-    //collision
     push()
-    fill("#00ff00")
-    rect(eCollision.x, eCollision.y, eCollision.w, eCollision.h)
+    fill(enemie2.color)
+    rect(enemie2.x, enemie2.y, enemie2.width, enemie2.height)
+
+
+    fill("#ffffff")
+    ellipse(mouseX, mouseY, 20, 20)
     pop()
-
-    //testing basic Collision
-
-    let r1 = { x: 200, y: 50, w: 10, h: 10 }
-    let e2 = { x: mouseX, y: mouseY, r: 40 }
-    sCollision.x = r1.x; sCollision.y = r1.y; sCollision.width = r1.w; sCollision.height = r1.h
-
-    let isColliding = sCollision.toEllipseCollision({ x: e2.x, y: e2.y, radius: e2.r })
-
-    //debug Collision
-    if (isColliding == true)
-    {
-        push()
-        fill("#00ff00")
-        noStroke()
-    }
-    rect(r1.x, r1.y, r1.w, r1.h)
-    ellipse(e2.x, e2.y, e2.r * 2, e2.r * 2)
-    if (isColliding) pop()
-
-    //let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
     */
 
     //Events
     if (mouseIsPressed)
     {
+        /*Debug
+        let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
+        let ellipse3 = { x: mouseX+50, y: mouseY+50, radius: 20 }
+        let ellipse4 = { x: mouseX-50, y: mouseY-50, radius: 20 }
+        
         player.pController.shoot(center.x, center.y, mouseX, mouseY)
 
-        //enemieController.setCollidingEllipseObjects([ellipse2])
+        enemieController.setCollidingEllipseObjects([ellipse2, ellipse3])
         push()
-        //ellipse(ellipse2.x, ellipse2.y, ellipse2.radius, ellipse2.radius)
-        pop()
+        ellipse(ellipse2.x, ellipse2.y, ellipse2.radius, ellipse2.radius)
+        ellipse(ellipse3.x, ellipse3.y, ellipse3.radius, ellipse3.radius)
+        ellipse(ellipse4.x, ellipse4.y, ellipse4.radius, ellipse4.radius)
+        pop()*/
+        /* Debug2 */
+        player.pController.shoot(center.x, center.y, mouseX, mouseY)
+        
+    }else{
+        let ellipse2 = { x: mouseX, y: mouseY, radius: 20 }
+        let ellipse3 = { x: mouseX+50, y: mouseY+50, radius: 20 }
+        enemieController.setCollidingEllipseObjects([])  
     }
+
+    enemieCollisionCheck()
+}
+/* Collision */
+function enemieCollisionCheck(){
+    enemieController.setCollidingEllipseObjects(player.pController.getProjectiles())
 }
 
 /* Behaviors */
 function behaviorEnemies()
 {
     enemieController._update()
-
-
     enemieController.enemies.forEach((enemie) =>
     {
         if (enemiemove) enemie.moveLook(center.x, center.y)

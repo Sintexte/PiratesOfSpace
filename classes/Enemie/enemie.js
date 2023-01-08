@@ -23,7 +23,7 @@ class Enemie
         this.vy = 0
 
         //collision
-        this.collision = new SquareCollision(x, y, this.width, this.height)
+        this.collision = new EnemieCollision(x, y, this.width / 1.5, this.height / 1.5)
         this.iscollision = false
 
         //"Aestetic"
@@ -80,9 +80,10 @@ class Enemie
     //r: Int ellipse radius 
     isColliding(eX, eY, r)
     {
-        let iscollision = this.collision.toEllipseCollision({ x: eX, y: eY, r: r })
+        let iscollision = this.collision.toEllipseCollision({ x: eX, y: eY, radius: r })
         return iscollision
     }
+
 
     //posx, posy position of the enemie
     //mx, my a given position
@@ -108,8 +109,16 @@ class Enemie
     {
         if (this.iscollision)
         {
-            console.log("Collision");
+            //Enemie Behavior/StateChange when colliding
+            //console.log("Collision");
             this.color = "#00ff00"
+        } else
+        {
+            //out of collision Return to normal state
+            if (this.color != "#ff0000")
+            {
+                this.color = "#ff0000"
+            }
         }
     }
 
