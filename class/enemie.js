@@ -6,10 +6,6 @@ class Enemie
         this.x = x
         this.y = y
 
-        //positionReal
-        this.x2 = x
-        this.y2 = y
-
         //size
         this.width = 50
         this.height = 30
@@ -38,8 +34,8 @@ class Enemie
         let x2 = gX, y2 = gY
 
         //differance between two points
-        let dx = x2 - this.x2
-        let dy = y2 - this.y2
+        let dx = x2 - this.x
+        let dy = y2 - this.y
 
         //calculating the angle
         let angle = Math.atan2(dy, dx)
@@ -53,7 +49,5 @@ class Enemie
     {
         this.x += this.vx * this.speed
         this.y += this.vy * this.speed
-        this.x2 += this.vx * this.speed
-        this.y2 += this.vy * this.speed
     }
 }
