@@ -20,7 +20,7 @@ var isMousehold
 //testing (variables used to test new implementations)
 var projectile1
 var sCollision
-var enemiemove = false
+var enemiemove = true
 
 function setup()
 {
