@@ -112,6 +112,7 @@ function drawProjectiles()
     {
         let radius = projectile.radius
         push()
+        noStroke()
         fill(projectile.color)
         ellipse(projectile.x, projectile.y, radius, radius)
         pop()
